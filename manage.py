@@ -6,7 +6,7 @@ import sys
 
 def main():
     if os.environ.get("DJANGO_ENV") == "production":
-        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'timecheck.settings.production')
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'timecheck.settings.prod')
     else:
         os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'timecheck.settings.local')
     try:
