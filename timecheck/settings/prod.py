@@ -10,3 +10,5 @@ DATABASES = {
         'PORT': '25060',
     }
 }
+
+ALLOWED_HOSTS = ['.mtcp.io', '.mattcorp.com', '.timecheck.app']
