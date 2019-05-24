@@ -49,7 +49,7 @@ class UserLoginView(LoginView):
             payload = jwt.decode(auth_jwt, settings.AUTH_JWT_PUBLIC_KEY,
                                  algorithms=settings.AUTH_JWT_VALID_ALGORITHMS,
                                  options=settings.AUTH_JWT_OPTIONS,
-                                 audience='https://api.tc.mtcp.io',
+                                 audience='https://api.timecheck.app',
                                  issuer='https://id.mattcorp.com',
                                  subject='MattCorpAccountCredential')
         except ExpiredSignatureError:
