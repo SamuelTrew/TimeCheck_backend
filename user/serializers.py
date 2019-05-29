@@ -4,7 +4,7 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    id = serializers.UUIDField(source='public_id')
+    id = serializers.UUIDField()
 
     class Meta:
         model = User

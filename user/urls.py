@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import CurrentUserView, UserLoginView, UserLogoutView
 
-app_name = "users"
+app_name = "user"
 
 urlpatterns = [
     path("me", CurrentUserView.as_view(), name="detail"),

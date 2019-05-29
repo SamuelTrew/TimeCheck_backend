@@ -1,10 +1,17 @@
-from uuid import uuid4
-
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
+from utility.methods import generate_key
 from utility.mixins import ModelDateMixin
+
+
+# Should be a multiple of 4, or actual length may differ
+USER_KEY_LENGTH = 16
+
+
+def _generate_user_key():
+    return generate_key(USER_KEY_LENGTH)
 
 
 class UserManager(BaseUserManager):
@@ -49,16 +56,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin, ModelDateMixin):
-    id = models.UUIDField(
-        "Internal ID",
+    id = models.CharField(
+        "User ID",
         primary_key=True,
-        default=uuid4,
+        max_length=USER_KEY_LENGTH,
+        default=_generate_user_key,
         editable=False,
-    )
-    public_id = models.UUIDField(
-        "Public ID",
-        unique=True,
-        default=uuid4,
     )
     mattcorp_id = models.CharField(
         "MattCorp ID",
@@ -95,7 +98,7 @@ class User(AbstractBaseUser, PermissionsMixin, ModelDateMixin):
     objects = UserManager()
 
     EMAIL_FIELD = 'email'
-    USERNAME_FIELD = 'public_id'
+    USERNAME_FIELD = 'id'
     REQUIRED_FIELDS = ['name', 'email']
 
     class Meta:
@@ -103,7 +106,7 @@ class User(AbstractBaseUser, PermissionsMixin, ModelDateMixin):
         verbose_name_plural = 'users'
 
     def __str__(self):
-        return self.get_short_name()
+        return self.get_full_name()
 
     def clean(self):
         super().clean()
