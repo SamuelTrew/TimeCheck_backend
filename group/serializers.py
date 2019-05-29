@@ -10,8 +10,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ('id', 'name', 'members',)
-        read_only_fields = ('id', 'members',)
+        fields = ('id', 'name', 'thumb', 'members',)
+        read_only_fields = ('id', 'thumb', 'members',)
 
     def validate(self, attrs):
         unknown = set(self.initial_data) - set(self.fields)

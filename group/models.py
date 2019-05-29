@@ -8,9 +8,14 @@ MAXIMUM_GROUP_SIZE = 100
 
 # Should be a multiple of 4, or actual length may differ
 GROUP_KEY_LENGTH = 16
+INVITE_KEY_LENGTH = 20
 
 
 def _generate_group_key():
+    return generate_key(GROUP_KEY_LENGTH)
+
+
+def _generate_invite_key():
     return generate_key(GROUP_KEY_LENGTH)
 
 
@@ -35,3 +40,18 @@ class Group(ModelDateMixin):
 
     def __str__(self):
         return self.name
+
+
+class Invite(models.Model):
+    id = models.CharField(
+        "Invite ID",
+        primary_key=True,
+        max_length=INVITE_KEY_LENGTH,
+        default=_generate_invite_key,
+        editable=False,
+    )
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_created = models.DateTimeField("Date created", auto_now_add=True)
+
+    def __str__(self):
+        return self.id
