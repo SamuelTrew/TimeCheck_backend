@@ -1,0 +1,22 @@
+stages:
+  - deploy
+
+before_script:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq git
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    
+deploy_dev:
+  stage: deploy
+  environment:
+    name: dev
+    url: https://dev.timecheck.app
+  script:
+    - ssh timecheck@backend.timecheck.server.mattcorp.com "cd /home/timecheck/backend && git checkout master && git pull origin master && source venv/bin/activate && pip install -r requirements.txt && sudo systemctl restart gunicorn && exit"
+  only:
+    - master
