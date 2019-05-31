@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -33,6 +33,17 @@ class GroupViewSet(viewsets.ModelViewSet):
         serializer = InviteSerializer(instance=invite)
         return Response(serializer.data)
 
+    @action(detail=True, methods=['get'])
+    def leave(self, request, pk=None):
+        group = self.get_object()
+        group.members.remove(self.request.user)
+        if group.members.count() == 0:
+            group.delete()
+        else:
+            # TODO: Make another user admin if group now has no admins
+            group.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class AcceptInviteView(APIView):
     permission_classes = (IsAuthenticated,)
@@ -43,3 +54,14 @@ class AcceptInviteView(APIView):
         group = invite.group
         group.members.add(request.user)
         return Response({'status': 'Success'})
+
+
+class InviteGroupView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, invite=None):
+        queryset = Invite.objects.all()
+        invite = get_object_or_404(queryset, pk=invite)
+        group = invite.group
+        serializer = GroupSerializer(instance=group)
+        return Response(serializer.data)
