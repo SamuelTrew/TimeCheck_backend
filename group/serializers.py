@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from user.serializers import UserSerializer
-from .models import Group
+from .models import Group, Invite
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -21,6 +21,13 @@ class GroupSerializer(serializers.ModelSerializer):
         if read_only:
             raise ValidationError("Cannot include read only field(s): {}".format(", ".join(read_only)))
         return attrs
+
+
+class InviteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invite
+        fields = ('id',)
+        read_only_fields = fields
 
 
 # class GroupReceiveSerializer(serializers.ModelSerializer):

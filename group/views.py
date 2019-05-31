@@ -1,8 +1,12 @@
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from .models import Group
-from .serializers import GroupSerializer
+from .models import Group, Invite
+from .serializers import GroupSerializer, InviteSerializer
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -20,3 +24,22 @@ class GroupViewSet(viewsets.ModelViewSet):
         group = serializer.save()
         group.members.add(self.request.user)
         group.save()
+
+    @action(detail=True, methods=['get'])
+    def generate_invite(self, request, pk=None):
+        group = self.get_object()
+        invite = Invite(group=group)
+        invite.save()
+        serializer = InviteSerializer(instance=invite)
+        return Response(serializer.data)
+
+
+class AcceptInviteView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, invite=None):
+        queryset = Invite.objects.all()
+        invite = get_object_or_404(queryset, pk=invite)
+        group = invite.group
+        group.members.add(request.user)
+        return Response({'status': 'Success'})
