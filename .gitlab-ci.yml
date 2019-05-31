@@ -17,6 +17,6 @@ deploy_dev:
     name: dev
     url: https://dev.timecheck.app
   script:
-    - ssh timecheck@backend.timecheck.server.mattcorp.com "cd /home/timecheck/backend && git checkout master && git pull origin master && source venv/bin/activate && pip install -r requirements.txt && sudo systemctl restart gunicorn && exit"
+    - ssh timecheck@backend.timecheck.server.mattcorp.com "cd /home/timecheck/backend && git checkout master && git pull origin master && source venv/bin/activate && pip install -r requirements.txt && python manage.py migrate && sudo systemctl restart gunicorn && exit"
   only:
     - master
