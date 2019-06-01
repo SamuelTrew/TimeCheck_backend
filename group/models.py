@@ -37,7 +37,8 @@ class Group(ModelDateMixin):
         null=True,
     )
     colour = models.CharField(
-        "Colour"
+        "Colour",
+        max_length=20,
     )
     members = models.ManyToManyField(User)
 
