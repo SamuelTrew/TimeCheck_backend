@@ -36,6 +36,9 @@ class Group(ModelDateMixin):
         blank=True,
         null=True,
     )
+    colour = models.CharField(
+        "Colour"
+    )
     members = models.ManyToManyField(User)
 
     def __str__(self):
