@@ -36,10 +36,10 @@ class Group(ModelDateMixin):
         blank=True,
         null=True,
     )
-    colour = models.CharField(
-        "Colour",
-        max_length=20,
-    )
+    # colour = models.CharField(
+    #     "Colour",
+    #     max_length=20,
+    # )
     members = models.ManyToManyField(User)
 
     def __str__(self):

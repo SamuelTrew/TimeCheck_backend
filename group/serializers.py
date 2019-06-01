@@ -10,7 +10,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ('id', 'name', 'thumb', 'members', 'colour')
+        # fields = ('id', 'name', 'thumb', 'members', 'colour')
+        fields = ('id', 'name', 'thumb', 'members')
         read_only_fields = ('id', 'thumb', 'members',)
 
     def validate(self, attrs):
