@@ -17,13 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from group.views import GroupViewSet, AcceptInviteView, InviteGroupView
+from groups.views import GroupViewSet, AcceptInviteView, InviteGroupView
 
 router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'group', GroupViewSet, basename="group")
 
 urlpatterns = [
-    path('user/', include('user.urls')),
+    path('user/', include('users.urls')),
     path('invite/<str:invite>/accept', AcceptInviteView.as_view(), name='accept_invite'),
     path('invite/<str:invite>/group', InviteGroupView.as_view(), name='invite_details'),
     path('admin/', admin.site.urls),

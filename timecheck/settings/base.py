@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'user.apps.UserConfig',
-    'group.apps.GroupConfig',
+    'users.apps.UserConfig',
+    'groups.apps.GroupConfig',
     'rest_framework',
     'knox',
     'corsheaders',
@@ -130,7 +130,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-AUTH_USER_MODEL = 'user.User'
+AUTH_USER_MODEL = 'users.User'
 
 APPEND_SLASH = False
 

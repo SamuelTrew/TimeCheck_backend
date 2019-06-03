@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from user.serializers import UserSerializer
+from users.serializers import UserSerializer
 from .models import Group, Invite
 
 
