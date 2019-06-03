@@ -1,6 +1,7 @@
 from django.db import models
 
 from user.models import User
+from utility.color import ColorField
 from utility.methods import generate_key
 from utility.mixins import ModelDateMixin
 
@@ -36,9 +37,10 @@ class Group(ModelDateMixin):
         blank=True,
         null=True,
     )
-    # colour = models.CharField(
+    # colour = ColorField(
     #     "Colour",
-    #     max_length=20,
+    #     blank=True,
+    #     null=True,
     # )
     members = models.ManyToManyField(User)
 
