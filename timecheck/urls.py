@@ -15,12 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework_extensions.routers import ExtendedSimpleRouter
 
 from groups.views import GroupViewSet, AcceptInviteView, InviteGroupView
+from polls.views import PollViewSet
 
-router = routers.SimpleRouter(trailing_slash=False)
-router.register(r'group', GroupViewSet, basename="group")
+router = ExtendedSimpleRouter(trailing_slash=False)
+group_routes = router.register(
+    r'group',
+    GroupViewSet,
+    basename='group'
+)
+group_routes.register(
+    r'poll',
+    PollViewSet,
+    basename='poll',
+    parents_query_lookups=('group',)
+)
 
 urlpatterns = [
     path('user/', include('users.urls')),

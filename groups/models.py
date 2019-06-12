@@ -80,7 +80,7 @@ class Invite(models.Model):
         editable=False,
     )
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    date_created = models.DateTimeField("Date created", auto_now_add=True)
+    date_created = models.DateTimeField("Date Created", auto_now_add=True)
 
     def __str__(self):
         return self.id

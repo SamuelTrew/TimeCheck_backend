@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin, ModelDateMixin):
         "Email address",
         error_messages={
             'unique': "A user with that email address already exists",
-        },
+        }
     )
     email_verified = models.BooleanField(
         "Email verified",
