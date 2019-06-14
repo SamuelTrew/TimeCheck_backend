@@ -38,3 +38,25 @@ class PollSerializer(serializers.ModelSerializer):
             PollOption.objects.create(poll=poll, **option_data)
         return poll
 
+
+# Used for the activity feed (less data required)
+class PollActivityOptionSerializer(serializers.ModelSerializer):
+    votes = serializers.SerializerMethodField()
+
+    class Meta:
+        model = PollOption
+        fields = ('id', 'text', 'votes', 'order',)
+        read_only_fields = fields
+
+    def get_votes(self, obj):
+        return obj.vote_set.count()
+
+
+# Used for the activity feed (less data required)
+class PollActivitySerializer(serializers.ModelSerializer):
+    options = PollActivityOptionSerializer(many=True)
+
+    class Meta:
+        model = Poll
+        fields = ('id', 'question', 'options',)
+        read_only_fields = fields

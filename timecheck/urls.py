@@ -17,20 +17,34 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_extensions.routers import ExtendedSimpleRouter
 
+from activities.views import ActivityItemViewSet
 from groups.views import GroupViewSet, AcceptInviteView, InviteGroupView
 from polls.views import PollViewSet
+from notes.views import NoteViewSet
 
 router = ExtendedSimpleRouter(trailing_slash=False)
 group_routes = router.register(
     r'group',
     GroupViewSet,
-    basename='group'
+    basename='group',
+)
+group_routes.register(
+    r'activity',
+    ActivityItemViewSet,
+    basename='activity',
+    parents_query_lookups=('group',),
 )
 group_routes.register(
     r'poll',
     PollViewSet,
     basename='poll',
-    parents_query_lookups=('group',)
+    parents_query_lookups=('group',),
+)
+group_routes.register(
+    r'note',
+    NoteViewSet,
+    basename='note',
+    parents_query_lookups=('group',),
 )
 
 urlpatterns = [

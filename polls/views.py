@@ -1,15 +1,12 @@
-from django.db.models import Prefetch
-from rest_framework import viewsets, status
+from rest_framework import viewsets
 from rest_framework.decorators import action
-from rest_framework.exceptions import APIException, ParseError
-from rest_framework.generics import get_object_or_404
+from rest_framework.exceptions import ParseError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework_extensions.mixins import NestedViewSetMixin
 
 from .models import Poll, PollOption, Vote
-from .serializers import PollSerializer, PollOptionSerializer
+from .serializers import PollSerializer
 
 
 class PollViewSet(NestedViewSetMixin, viewsets.ModelViewSet):

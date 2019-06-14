@@ -4,10 +4,9 @@ from events.models import Event
 from groups.models import Group
 from users.models import User
 from utility.methods import generate_key
-
-# Should be a multiple of 4, or actual length may differ
 from utility.mixins import ModelDateMixin
 
+# Should be a multiple of 4, or actual length may differ
 EVENT_CALENDAR_KEY_LENGTH = 16
 PERSONAL_CALENDAR_KEY_LENGTH = 16
 SELECTION_KEY_LENGTH = 16
