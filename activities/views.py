@@ -6,7 +6,13 @@ from .models import ActivityItem
 from .serializers import ActivityItemSerializer
 
 
-class ActivityItemViewSet(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
+class GroupActivityViewSet(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ActivityItemSerializer
+    queryset = ActivityItem.objects.all()
+
+
+class HomeActivityViewSet(NestedViewSetMixin, viewsets.ReadOnlyModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ActivityItemSerializer
     queryset = ActivityItem.objects.all()
