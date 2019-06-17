@@ -64,6 +64,9 @@ class ActivityItem(ModelDateMixin):
         default=False,
     )
 
+    class Meta:
+        ordering = ('pinned', '-date_created',)
+
     def __str__(self):
         return f"Activity Item by {self.creator} in group {self.group}"
 
